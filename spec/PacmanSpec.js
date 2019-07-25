@@ -527,7 +527,7 @@ describe("When Pacman is collided with wall and stopped and then is given a new 
 
 describe("When Pacman is moving and is given a command to change direction", function () {
   describe("and this direction is blocked by a wall", function () {
-    it("Pacman's current direction shouldn't change", function () {
+    beforeEach(function () {
       var SPEED = 2;
       var game = new Game();
       var playScene = new PlayScene(game);
@@ -542,7 +542,8 @@ describe("When Pacman is moving and is given a command to change direction", fun
       var pacman = playScene.getPacman();
       pacman.setSpeed(SPEED);
       var INIT_POS = pacman.getPosition();
-
+    });
+    it("Pacman's direction shouldn't change", function () {
       game.keyPressed(KEY_LEFT);
       game.tick();
       expect(pacman.getCurrentSpeed()).toEqual(SPEED);
@@ -556,21 +557,6 @@ describe("When Pacman is moving and is given a command to change direction", fun
       expect(pacman.getPosition()).toEqual(new Position(INIT_POS.x - SPEED * 2, INIT_POS.y));
     });
     it("but should be stored as the next direction to move whenever possible", function () {
-      var SPEED = 2;
-      var game = new Game();
-      var playScene = new playScene(game);
-      game.setScene(playScene);
-      var map = ['#####',
-                 '## ##',
-                 '#  C#',
-                 '## ##',
-                 '#####'];
-      playScene.loadMap(map);
-      playScene.getReadyMessage().hide();
-      var pacman = playScene.getPacman();
-      pacman.setSpeed(SPEED);
-      var INIT_POS = pacman.getPosition();
- 
       game.keyPressed(KEY_LEFT);
       game.tick();
       expect(pacman.getCurrentSpeed()).toEqual(SPEED);
