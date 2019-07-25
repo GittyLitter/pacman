@@ -583,7 +583,7 @@ describe("When Pacman is moving and is given a command to change direction", fun
       expect(pacman.getDirection()).toEqual(DIRECTION_LEFT);
       expect(pacman.getPosition()).toEqual(new Position(INIT_POS.x - SPEED * 2, INIT_POS.y));
       expect(pacman.prototype._nextDirection).toEqual(DIRECTION_DOWN);
-    ));
+    });
   });
 });
 
