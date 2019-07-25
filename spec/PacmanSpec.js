@@ -555,6 +555,35 @@ describe("When Pacman is moving and is given a command to change direction", fun
       expect(pacman.getDirection()).toEqual(DIRECTION_LEFT);
       expect(pacman.getPosition()).toEqual(new Position(INIT_POS.x - SPEED * 2, INIT_POS.y));
     });
+    it("but should be stored as the next direction to move whenever possible", function () {
+      var SPEED = 2;
+      var game = new Game();
+      var playScene = new playScene(game);
+      game.setScene(playScene);
+      var map = ['#####',
+                 '## ##',
+                 '#  C#',
+                 '## ##',
+                 '#####'];
+      playScene.loadMap(map);
+      playScene.getReadyMessage().hide();
+      var pacman = playScene.getPacman();
+      pacman.setSpeed(SPEED);
+      var INIT_POS = pacman.getPosition();
+ 
+      game.keyPressed(KEY_LEFT);
+      game.tick();
+      expect(pacman.getCurrentSpeed()).toEqual(SPEED);
+      expect(pacman.getDirection()).toEqual(DIRECTION_LEFT);
+      expect(pacman.getPosition()).toEqual(new Position(INIT_POS.x - SPEED, INIT_POS.y));
+
+      game.keyPressed(KEY_DOWN);
+      game.tick();
+      expect(pacman.getCurrentSpeed()).toEqual(SPEED);
+      expect(pacman.getDirection()).toEqual(DIRECTION_LEFT);
+      expect(pacman.getPosition()).toEqual(new Position(INIT_POS.x - SPEED * 2, INIT_POS.y));
+      expect(pacman.prototype._nextDirection).toEqual(DIRECTION_DOWN);
+    ));
   });
 });
 
